@@ -132,7 +132,7 @@ params = Params(accumulation_rate = accumulation_rate,
 
 
  #build the model to use in the initialisation:
-println()"Starting to make the model")
+println("Starting to make the model")
 model = Model(grid = grid,
               bed_elevation = bed, 
               params = params, 
