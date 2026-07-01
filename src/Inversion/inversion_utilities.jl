@@ -126,12 +126,12 @@ function solve_dirichlet_neumann_velocities!(model, inversion,clock)
         ch_pD = nothing
         t_start=time()  
         num_restarts = inversion_params.maxiter ÷ inversion_params.gmres_restart
-        Pl = Diagonal(MSchur) 
-
+        Pl = Diagonal(MSchur)
+        
         if inversion_params.gmres
             for i in 1:num_restarts
                 pD, ch_pD =  gmres!(pD,SchurOp, bSchur, abstol=inversion_params.abstol, maxiter=inversion_params.gmres_restart, restart=inversion_params.gmres_restart, Pl=Pl,verbose=false,log=true)
-                 total_iters_pD = ch_pD.iters
+                total_iters_pD = ch_pD.iters
                 if !@isdefined residpD
                 residpD = similar(bSchur) 
                 end 
@@ -1267,21 +1267,22 @@ end
 
 Update  glen_b
 """
-function update_glen_b!(model::AbstractModel)
-    @unpack gh,g3d=model.fields
-    @unpack params=model
-    for i = 1:g3d.nxs
-        for j = 1:g3d.nys
-            for k = 1:g3d.nσs
-                if gh.mask[i,j]
-                g3d.glen_b[i,j,k] = glen_b.(g3d.θ[i,j,k],g3d.Φ[i,j,k],params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const)
-                end
-            end
-        end
-    end
+"""IT IS DEFINED SOMEWHERE ELSE AS WELL AND CLASHES"""
+# function update_glen_b!(model::AbstractModel)
+#     @unpack gh,g3d=model.fields
+#     @unpack params=model
+#     for i = 1:g3d.nxs
+#         for j = 1:g3d.nys
+#             for k = 1:g3d.nσs
+#                 if gh.mask[i,j]
+#                 g3d.glen_b[i,j,k] = glen_b.(g3d.θ[i,j,k],g3d.Φ[i,j,k],params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const)
+#                 end
+#             end
+#         end
+#     end
     
-    return model
-end
+#     return model
+# end
 
 """
     update_viscosities_quadratures_dirichlet(model::AbstractModel,inversion)
