@@ -1267,7 +1267,8 @@ end
 
 Update  glen_b
 """
-"""IT IS DEFINED SOMEWHERE ELSE AS WELL AND CLASHES"""
+
+## IT IS DEFINED SOMEWHERE ELSE AS WELL AND CLASHES
 # function update_glen_b!(model::AbstractModel)
 #     @unpack gh,g3d=model.fields
 #     @unpack params=model
