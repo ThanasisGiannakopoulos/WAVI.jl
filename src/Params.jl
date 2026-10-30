@@ -9,7 +9,8 @@ struct Params{T <: Real, A, G, H, E}
        default_thickness :: T 
        default_viscosity :: T 
      default_temperature :: T
-          default_damage :: T 
+          default_damage :: T
+      default_preBfactor :: T
   default_strain_history :: T
     ice_tensile_strength :: T
 ice_compressive_strength :: T
@@ -34,6 +35,8 @@ glen_a_activation_energy :: T
       effective_pressure :: E
               basal_melt :: T
  default_temperature_ave :: T
+           glen_b_damage :: Bool
+         instant_healing :: Bool
 end
 
 
@@ -90,6 +93,7 @@ function Params(; g = 9.81,
                   default_viscosity= 1.0e7,
                   default_temperature=263.15,
                   default_damage= 0.0,
+                  default_preBfactor= 1.0,
                   default_strain_history = 0.0,
                   ice_tensile_strength = 262.9e3,
                   ice_compressive_strength =  496.7e3,
@@ -113,7 +117,9 @@ function Params(; g = 9.81,
                   hydraulic_potential_b = 0.0,
                   effective_pressure = 1.0e6,
                   basal_melt = 0.0,
-                  default_temperature_ave = 253.15)
+                  default_temperature_ave = 253.15,
+                  glen_b_damage = false,
+                  instant_healing = true)
                       
   #default the timestep to 1.0 (will be updated when the model is embedded in a simulation)
   dt = 1.0
@@ -130,6 +136,7 @@ function Params(; g = 9.81,
                   default_viscosity,
                   default_temperature,
                   default_damage,
+                  default_preBfactor,
                   default_strain_history,
                   ice_tensile_strength,
                   ice_compressive_strength,
@@ -153,6 +160,8 @@ function Params(; g = 9.81,
                   hydraulic_potential_b,
                   effective_pressure,
                   basal_melt,
-                  default_temperature_ave
+                  default_temperature_ave,
+                  glen_b_damage,
+                  instant_healing
                   )
 end

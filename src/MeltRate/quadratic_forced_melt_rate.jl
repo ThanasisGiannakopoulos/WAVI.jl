@@ -41,7 +41,6 @@ Keyword arguments
 - flocal: flag for local or non-local temperature dependence. Set to true for local dependence (eqn 4 in Favier 2019 GMD) or false for non-local dependence (eqn 5)
 - melt_partial_cell: flag for specify whether to apply melt on partially floating cells (true) or not (false)
 """
-
 function QuadraticForcedMeltRate(;
                             γT = 1.e-3,
                             λ1 = -5.73e-2,

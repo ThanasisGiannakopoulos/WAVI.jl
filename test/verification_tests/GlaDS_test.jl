@@ -121,7 +121,7 @@ if do_visu
     lines!(ax_h, xc_slice, simulation.model.fields.gh.basal_water_thickness[:, y_slice_idx]; linewidth=2, color=:cornflowerblue, label="h")
 
     # Get data arrays at melting parameter m
-    include("verification_tests/check-vs-gladsog.jl")
+    include("./check-vs-gladsog.jl")
     ref_phi, ref_h = dataOG[melt_rate]
 
     # Find the closest reference time point

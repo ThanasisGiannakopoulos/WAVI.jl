@@ -47,7 +47,10 @@ function JKVstep!(inversion_simulation)
    
     update_β_inversion!(model,inversion)
     update_preBfactor_inversion!(model,inversion)
-    update_damage!(model)
+    # CHANGED
+    #update_damage!(model) # reserve damage for phase-field and decouple it from inversion for now
+    # we need to pass preBfactor to glen_b!; use g3d.preBfactor
+    update_preBfactor_3d!(model)
     update_glen_b!(model)
 
     inner_update_viscosity!(model)

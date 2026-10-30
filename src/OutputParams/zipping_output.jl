@@ -42,7 +42,6 @@ end
 
 Return the times associated with filenames
 """
-
 function get_times(filenames)
     t = zeros(length(filenames))
     for i = 1:length(filenames)

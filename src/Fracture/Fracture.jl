@@ -75,10 +75,16 @@ end
 Advect the strain history neglecting all vertical shear.
 """
 function update_strain_history!(model::AbstractModel{T,N}) where {T,N} 
-@unpack g3d = model.fields
+    @unpack g3d = model.fields
+    @unpack params=model
 
-update_damage!(model;store_strain_history = true)
-advect3D!(g3d.strain_history,model)
+    if params.instant_healing == false
+        update_damage!(model;store_strain_history = true) # true here, false in inner_update in update_velocities.jl
+    else
+        update_damage!(model;store_strain_history = false)
+        #println("here in update_history")
+    end
+    advect3D!(g3d.strain_history,model)
 
 return model
 

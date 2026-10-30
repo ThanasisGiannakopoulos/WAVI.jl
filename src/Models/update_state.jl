@@ -189,7 +189,13 @@ function update_glen_b!(model::AbstractModel)
     for k=1:g3d.nσs
         for j=1:g3d.nys
             for i=1:g3d.nxs
-                g3d.glen_b[i,j,k] = glen_b.(g3d.θ[i,j,k],g3d.Φ[i,j,k],params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const)
+                if params.glen_b_damage==false
+                    g3d.glen_b[i,j,k] = glen_b.(g3d.θ[i,j,k],g3d.preBfactor[i,j,k],params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const)
+                else
+                    g3d.glen_b[i,j,k] = glen_b_with_damage.(g3d.θ[i,j,k],g3d.preBfactor[i,j,k],params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const;
+                    damage = g3d.Φ[i,j,k])
+                    #println("glen_b with damage here")
+                end
             end
         end
     end

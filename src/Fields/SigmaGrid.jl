@@ -10,7 +10,8 @@ SigmaGrid(;
         θ,
         Φ,
         strain_history,
-        glen_b
+        glen_b,
+        preBfactor
         )
 
 Construct a WAVI.jl SigmaGrid with size (nxs,nys,nσs)
@@ -31,6 +32,7 @@ Keyword arguments
 - 'Φ' : (required) three dimensional damage field
 - 'strain_history' : (required) strain energy history field (Pa)
 - 'glen_b': (required) three dimensional field of glen_b values in viscosity calcluations
+- 'preBfactor' (required) three dimensional field for ice softenss; needed for glen_b function
 """
 
 @with_kw struct SigmaGrid{T <: Real, N <: Integer}
@@ -44,5 +46,6 @@ quadrature_weights :: Vector{T} = 0.5*[ σ[2] .- σ[1] ; σ[3:end] .- σ[1:end-2
 θ :: Array{T,3}; @assert size(θ)==(nxs,nys,nσs)
 Φ :: Array{T,3}; @assert size(Φ)==(nxs,nys,nσs)
 strain_history :: Array{T,3}; @assert size(strain_history)==(nxs,nys,nσs)
-glen_b :: Array{T,3} = glen_b.(θ,Φ); @assert size(glen_b)==(nxs,nys,nσs)
+preBfactor :: Array{T,3}; @assert size(preBfactor)==(nxs,nys,nσs)
+glen_b :: Array{T,3} = glen_b.(θ,preBfactor); @assert size(glen_b)==(nxs,nys,nσs)
 end

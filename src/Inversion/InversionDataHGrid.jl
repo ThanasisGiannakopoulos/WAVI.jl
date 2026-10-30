@@ -38,7 +38,6 @@ Keyword arguments
     - 'dhdt': dhdt data 
     - 'accumulation_rate': accumlate rate data      
 """
-
 function InversionDataHGrid(;
                 nxh,
                 nyh,

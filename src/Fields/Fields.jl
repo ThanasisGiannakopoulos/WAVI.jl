@@ -22,7 +22,6 @@ end
 
 Acts as a constructor for the fields (no explicit constructor as fields `only ever called when setting up a model)
 """
-
 function setup_fields(grid, initial_conditions, solver_params, params, bed_array)
     #Define masks for points on h-, u-, v- and c-grids that lie in model domain.
     h_mask = grid.h_mask 
@@ -93,12 +92,14 @@ function setup_fields(grid, initial_conditions, solver_params, params, bed_array
     θ = deepcopy(initial_conditions.initial_temperature)
     Φ = deepcopy(initial_conditions.initial_damage)
     strain_history = deepcopy(initial_conditions.initial_strain_history)
+    preBfactor = deepcopy(initial_conditions.initial_preBfactor)
 
     g3_glen_b = zeros(size(η))
     for i = 1:grid.nx
         for j = 1:grid.ny
             for k = 1:grid.nσ
-                g3_glen_b[i,j,k] = glen_b.(θ[i,j,k],Φ[i,j,k],params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const)
+                g3_glen_b[i,j,k] = glen_b.(θ[i,j,k], preBfactor[i,j,k],
+                    params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const)
             end
         end
     end
@@ -113,7 +114,8 @@ function setup_fields(grid, initial_conditions, solver_params, params, bed_array
         Φ = Φ,
         strain_history = strain_history,
         glen_b = g3_glen_b,
-        quadrature_weights = grid.quadrature_weights
+        quadrature_weights = grid.quadrature_weights,
+        preBfactor = preBfactor
     )
 
     #Wavelet-grid, u-component.

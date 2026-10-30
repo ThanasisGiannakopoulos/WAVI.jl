@@ -99,8 +99,6 @@ Keyword arguments
     - 'θ_ave': initial depth-averaged temperature
     - 'preBfactor : preBfactor (1=no damage)
 """
-
-
 function HGrid(;
                 nxh, 
                 nyh,

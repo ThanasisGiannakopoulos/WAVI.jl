@@ -39,7 +39,6 @@ end
 
 use Tsai-Budd sliding law to calculate basal drag coefficient
 """
-
 function update_β_using_sliding_law!(sliding_law::TsaiBuddSlidingLaw, model::AbstractModel)
     @unpack gh=model.fields
     gh.β .= (min.((sliding_law.coulomb_coefficient .* gh.effective_pressure) ./ ( sqrt.(gh.bed_speed.^2 .+  sliding_law.reg_speed^2 ) ), 

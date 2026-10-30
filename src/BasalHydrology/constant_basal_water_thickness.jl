@@ -23,7 +23,6 @@ end
 
 use a constant basal water thickness to calculate the effective pressure (assumed hydrostatic, so proportional to basal_water_thickness)
 """
-
 function update_basal_water_thickness_effective_pressure!(basal_hydrology::ConstantBasalWaterThickness, model::AbstractModel)
     @unpack gh=model.fields
     @unpack params=model

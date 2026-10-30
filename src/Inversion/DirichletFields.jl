@@ -15,7 +15,6 @@ end
 
 Acts as a constructor for the dirichletfields (no explicit constructor as dirichletfields `only ever called when setting up a model)
 """
-
 function setup_dirichletfields(grid,bed_array,solver_params,initial_conditions,params)
     #Define masks for points on h-, u-, v- and c-grids that lie in model domain.
     h_mask = grid.h_mask 
@@ -76,11 +75,13 @@ function setup_dirichletfields(grid,bed_array,solver_params,initial_conditions,p
     η = deepcopy(initial_conditions.initial_viscosity)
     θ = deepcopy(initial_conditions.initial_temperature)
     Φ = deepcopy(initial_conditions.initial_damage)
+    preBfactor = deepcopy(initial_conditions.preBfactor)
     g3_glen_b = zeros(size(η))
     for i = 1:grid.nx
         for j = 1:grid.ny
             for k = 1:grid.nσ
-               g3_glen_b[i,j,k] = glen_b.(θ[i,j,k],Φ[i,j,k],params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const)
+                g3_glen_b[i,j,k] = glen_b.(θ[i,j,k], preBfactor[i,j,k],
+                    params.glen_a_ref[i,j], params.glen_n, params.glen_a_activation_energy, params.glen_temperature_ref, params.gas_const)
             end
         end
     end

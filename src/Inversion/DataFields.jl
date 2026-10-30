@@ -16,8 +16,6 @@ end
 
 Acts as a constructor for the datafields (no explicit constructor as datafields only ever called when setting up a model)
 """
-
-#function setup_datafields(grid,speed_u,speed_u_mask,speed_v,speed_v_mask,dhdt,accumulation_rate, dhdtacc_mask)
 function DataFields(;
                     grid = nothing,
                     speed_u = nothing,

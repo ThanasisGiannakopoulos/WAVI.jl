@@ -27,7 +27,6 @@ end
 
 use Coulomb sliding law to calculate basal drag coefficient
 """
-
 function update_β_using_sliding_law!(sliding_law::CoulombSlidingLaw, model::AbstractModel)
     @unpack gh=model.fields
     gh.β .= (sliding_law.coulomb_coefficient .* gh.effective_pressure) ./ ( sqrt.(gh.bed_speed.^2 .+  sliding_law.reg_speed^2 ) )

@@ -52,7 +52,6 @@ end
 use a quadratic temperature approximation to calculate the ice temperature and grounded basal melt rate
 also updates the stiffness parameter B in Glen flow law.
 """
-
 function update_ice_temperature_grounded_melt_rate!(thermo_dynamics::QuadraticTemperatureApproximation{T}, model::AbstractModel) where {T}
     @unpack gh,gu,gv,g3d=model.fields
     @unpack params=model

@@ -5,7 +5,6 @@
 
 update beta and beta_eff for the dirichlet solution by setting as equal to the Neumann (model) fields
 """
-
 function update_betas_dirichlet!(model,inversion)
     inversion.fields.gh.β[inversion.fields.gh.mask] .= model.fields.gh.β[model.fields.gh.mask]
     inversion.fields.gh.βeff[inversion.fields.gh.mask]  =model.fields.gh.βeff[model.fields.gh.mask]
@@ -1217,7 +1216,7 @@ function update_preBfactor_3d!(model::AbstractModel)
                 for k = 1:g3d.nσs
                     # Adjust preBfactor for each (i, j, k) so that the weighted sum gives the desired depth-averaged value
                  #   g3d.preBfactor[i,j,k] = gh.preBfactor[i,j] * g3d.quadrature_weights[k] / total_weight
-                    g3d.preBfactor[i,j,k] = gh.preBfactor[i,j]/(g3d.nσs*g3d.quadrature_weights[k])  
+                    g3d.preBfactor[i,j,k] = gh.preBfactor[i,j]#/(g3d.nσs*g3d.quadrature_weights[k])  # Temp;wrong
                 end
             end
         end
@@ -1238,36 +1237,35 @@ function update_preBfactor_3d!(model::AbstractModel)
 end
 
 
+# CHANGED
+# """
+#     update_damage!(model::AbstractModel)
 
-"""
-    update_damage!(model::AbstractModel)
+# update to damage in the inversion on the 3d grid at all sigma levels.
+# """
+# function update_damage!(model::AbstractModel)
+#     @unpack gh,g3d=model.fields
+#   #  @unpack params,solver_params=model 
+#       for k=1:g3d.nσs
+#         for j=1:g3d.nys
+#             for i=1:g3d.nxs
+#                 if gh.mask[i,j]
+#               #  g3d.Φ[i,j,k] = 1.0 .- g3d.preBfactor[i,j,k]
+#                 g3d.Φ[i,j,k] = 1.0 .- gh.preBfactor[i,j]
+#                 end
+#             end
+#         end
+#     end
 
-update to damage in the inversion on the 3d grid at all sigma levels.
-"""
-function update_damage!(model::AbstractModel)
-    @unpack gh,g3d=model.fields
-  #  @unpack params,solver_params=model 
-      for k=1:g3d.nσs
-        for j=1:g3d.nys
-            for i=1:g3d.nxs
-                if gh.mask[i,j]
-              #  g3d.Φ[i,j,k] = 1.0 .- g3d.preBfactor[i,j,k]
-                g3d.Φ[i,j,k] = 1.0 .- gh.preBfactor[i,j]
-                end
-            end
-        end
-    end
-
-    return model
-end
+#     return model
+# end
 
 
-"""
-    update_glen_b!(model::AbstractModel)
+# """
+#     update_glen_b!(model::AbstractModel)
 
-Update  glen_b
-"""
-
+# Update  glen_b
+# """
 ## IT IS DEFINED SOMEWHERE ELSE AS WELL AND CLASHES
 # function update_glen_b!(model::AbstractModel)
 #     @unpack gh,g3d=model.fields
@@ -1290,7 +1288,6 @@ Update  glen_b
 
     Update the viscosities and quadrates for the dirichlet solution by setting as equal to the Neumann (model) fields
 """
-
 function update_viscosities_quadratures_dirichlet(model::AbstractModel,inversion)
     inversion.fields.gh.ηav[inversion.fields.gh.mask] =model.fields. gh.ηav[model.fields.gh.mask]
     inversion.fields.gh.quad_f0[inversion.fields.gh.mask] =model.fields.gh.quad_f0[model.fields.gh.mask]

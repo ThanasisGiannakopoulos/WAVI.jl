@@ -458,13 +458,18 @@ volume_above_floatation(h,b,params,grid) = sum(sum(height_above_floatation.(h,b,
 Compute stiffness parameter B in Glen flow law.
 
 """
-
-function glen_b(temperature,damage,glen_a_ref, glen_n, glen_a_activation_energy, glen_temperature_ref, gas_const)
+function glen_b(temperature, preBfactor, glen_a_ref, glen_n, glen_a_activation_energy, glen_temperature_ref, gas_const)
     glen_a0 = glen_a_ref*exp(+glen_a_activation_energy/(glen_temperature_ref*gas_const) )
-    glen_b = (1-damage)*( glen_a0*exp(-glen_a_activation_energy/(temperature*gas_const)) )^(-1.0/glen_n)
+    glen_b = (preBfactor)*( glen_a0*exp(-glen_a_activation_energy/(temperature*gas_const)) )^(-1.0/glen_n)
     return glen_b
 end
 
+# with damage as well
+function glen_b_with_damage(temperature, preBfactor, glen_a_ref, glen_n, glen_a_activation_energy, glen_temperature_ref, gas_const; damage)
+    glen_a0 = glen_a_ref*exp(+glen_a_activation_energy/(glen_temperature_ref*gas_const) )
+    glen_b = (1.0 - damage)*(preBfactor)*( glen_a0*exp(-glen_a_activation_energy/(temperature*gas_const)) )^(-1.0/glen_n)
+    return glen_b
+end
 
 """
     get_u_mask(h_mask)

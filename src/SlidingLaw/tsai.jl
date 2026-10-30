@@ -35,7 +35,6 @@ end
 
 use Tsai sliding law to calculate basal drag coefficient
 """
-
 function update_β_using_sliding_law!(sliding_law::TsaiSlidingLaw, model::AbstractModel)
     @unpack gh=model.fields
     update_drag_coefficient!(model)

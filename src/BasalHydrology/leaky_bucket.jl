@@ -35,7 +35,6 @@ end
 
 use a leaky bucket model to calculate the effective pressure
 """
-
 function update_basal_water_thickness_effective_pressure!(basal_hydrology::LeakyBucket, model::AbstractModel)
     @unpack gh=model.fields
     @unpack params=model

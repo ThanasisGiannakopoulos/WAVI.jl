@@ -193,7 +193,6 @@ end
     
 use the sheets only version of GlaDS to calculate the basal water thickness, hydraulic potential at the bed, and effective pressure
 """
-
 function update_basal_water_thickness_effective_pressure!(basal_hydrology::SheetOnlyGlaDS{T}, model::AbstractModel) where {T}
     # derived parameters
     @unpack ncheck, maxiter, etol, do_autotune, n_autotune, ɛ, shmip, m, k, α, β, ϕ_fixed, Ã, h_r, l_r = basal_hydrology

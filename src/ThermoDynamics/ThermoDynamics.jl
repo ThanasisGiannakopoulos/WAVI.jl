@@ -18,7 +18,6 @@ Keyword arguments
 
 no thermodynamics model is used. ice temperature is constant in time
 """
-
 function update_ice_temperature_grounded_melt_rate!(thermo_dynamics::NoThermoDynamics, model::AbstractModel)
     return model
 end
